@@ -710,6 +710,7 @@ class AnimatedDrawing(Transform, TimeManager):
         if kwargs['viewer_cfg'].draw_ad_txtr:
 
             if not hasattr(self, 'txtr_id'):
+                print("not hasattr")
                 self._initialize_texture('/content/texture2.png')
                 
             GL.glActiveTexture(GL.GL_TEXTURE0)
