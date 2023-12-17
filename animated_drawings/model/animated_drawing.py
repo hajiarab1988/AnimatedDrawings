@@ -671,7 +671,7 @@ class AnimatedDrawing(Transform, TimeManager):
 
         GL.glBindVertexArray(0)
         self._vertex_buffer_dirty_bit = False
-  count = 0
+    count = 0
     def _draw(self, **kwargs):
         count = couunt+1
         my_txt = count % 2 / 2
