@@ -605,10 +605,14 @@ class AnimatedDrawing(Transform, TimeManager):
     def _initialize_opengl_resources(self) -> None:
 
         h, w, _ = self.txtr.shape
-        image = Image.fromarray(self.txtr)
+        #image = Image.fromarray(self.txtr)
 
 
-        image.save("output.png")
+        #image.save("output.png")
+        image = Image.open("/content/test.png")
+
+        # Convert the image to a NumPy array
+        self.txtr.shape = np.array(image)
 
         # # initialize the texture
         self.txtr_id = GL.glGenTextures(1)
