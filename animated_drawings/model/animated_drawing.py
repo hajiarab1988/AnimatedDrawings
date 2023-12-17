@@ -673,7 +673,7 @@ class AnimatedDrawing(Transform, TimeManager):
         self._vertex_buffer_dirty_bit = False
     count = 0
     def _draw(self, **kwargs):
-        count = couunt+1
+        count = count+1
         my_txt = count % 2 / 2
         print(count)
         if not self._is_opengl_initialized:
