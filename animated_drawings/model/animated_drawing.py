@@ -676,8 +676,8 @@ class AnimatedDrawing(Transform, TimeManager):
         self.count += 1
         my_txt = (self.count // 30) % 2
         print(my_txt)
-        if not self._is_opengl_initialized:
-            self._initialize_opengl_resources(texture_number=my_txt)
+        #if not self._is_opengl_initialized:
+        self._initialize_opengl_resources(texture_number=my_txt)
 
         if self._vertex_buffer_dirty_bit:
             self._rebuffer_vertex_data()
