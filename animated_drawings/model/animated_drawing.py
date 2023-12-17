@@ -711,7 +711,7 @@ class AnimatedDrawing(Transform, TimeManager):
 
             if not hasattr(self, 'txtr_id'):
                 print("not hasattr")
-                self._initialize_texture('/content/texture2.png')
+            self._initialize_texture('/content/texture2.png')
                 
             GL.glActiveTexture(GL.GL_TEXTURE0)
             GL.glBindTexture(GL.GL_TEXTURE_2D, self.txtr_id)
