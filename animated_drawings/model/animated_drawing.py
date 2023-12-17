@@ -668,8 +668,37 @@ class AnimatedDrawing(Transform, TimeManager):
         GL.glBindVertexArray(0)
         self._vertex_buffer_dirty_bit = False
 
+    
+    def _initialize_texture(self, image_path):
+        # Load the image using PIL
+        image = Image.open(image_path)
+
+        # Convert the image to a NumPy array
+        image_data = np.array(image)
+
+        # Generate a texture ID
+        self.txtr_id = GL.glGenTextures(1)
+
+        # Bind the texture
+        GL.glBindTexture(GL.GL_TEXTURE_2D, self.txtr_id)
+
+        # Set texture parameters (you can adjust these as needed)
+        GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT)
+        GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT)
+        GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR)
+        GL.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR)
+
+        # Load the image data into the texture
+        GL.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGBA, image.width, image.height, 0, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, image_data)
+
+        # Generate mipmaps for better quality
+        GL.glGenerateMipmap(GL.GL_TEXTURE_2D)
+
+        # Unbind the texture
+        GL.glBindTexture(GL.GL_TEXTURE_2D, 0)
+    
     def _draw(self, **kwargs):
-        print("DRAW!")
+       
         if not self._is_opengl_initialized:
             self._initialize_opengl_resources()
 
@@ -679,6 +708,10 @@ class AnimatedDrawing(Transform, TimeManager):
         GL.glBindVertexArray(self.vao)
 
         if kwargs['viewer_cfg'].draw_ad_txtr:
+
+            if not hasattr(self, 'txtr_id'):
+                self._initialize_texture('/content/texture2.png')
+                
             GL.glActiveTexture(GL.GL_TEXTURE0)
             GL.glBindTexture(GL.GL_TEXTURE_2D, self.txtr_id)
             GL.glDisable(GL.GL_DEPTH_TEST)
