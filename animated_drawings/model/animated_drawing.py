@@ -602,14 +602,14 @@ class AnimatedDrawing(Transform, TimeManager):
         for c_idx, v_idxs in enumerate(self.joint_to_tri_v_idx.values()):
             self.vertices[v_idxs, 3:6] = colors[c_idx]  # rgb colors
 
-    def _initialize_opengl_resources(self) -> None:
+    def _initialize_opengl_resources(self,texture_number: int) -> None:
 
         h, w, _ = self.txtr.shape
         #image = Image.fromarray(self.txtr)
 
 
         #image.save("output.png")
-        image = Image.open("/content/test.png")
+        image = Image.open(f"/content/test{texture_number}.png")
 
         # Convert the image to a NumPy array
         self.txtr = np.array(image)
@@ -671,11 +671,13 @@ class AnimatedDrawing(Transform, TimeManager):
 
         GL.glBindVertexArray(0)
         self._vertex_buffer_dirty_bit = False
-  
+  count = 0
     def _draw(self, **kwargs):
-       
+        count = couunt+1
+        my_txt = count % 2 / 2
+        print(count)
         if not self._is_opengl_initialized:
-            self._initialize_opengl_resources()
+            self._initialize_opengl_resources(texture_number=my_txt)
 
         if self._vertex_buffer_dirty_bit:
             self._rebuffer_vertex_data()
