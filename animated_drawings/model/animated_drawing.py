@@ -612,7 +612,7 @@ class AnimatedDrawing(Transform, TimeManager):
         image = Image.open("/content/test.png")
 
         # Convert the image to a NumPy array
-        self.txtr.shape = np.array(image)
+        self.txtr = np.array(image)
 
         # # initialize the texture
         self.txtr_id = GL.glGenTextures(1)
