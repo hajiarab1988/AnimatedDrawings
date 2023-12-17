@@ -674,8 +674,8 @@ class AnimatedDrawing(Transform, TimeManager):
     count = 0
     def _draw(self, **kwargs):
         self.count += 1
-        my_txt = (self.count // 10) % 2
-        print(self.count)
+        my_txt = (self.count // 30) % 2
+        print(my_txt)
         if not self._is_opengl_initialized:
             self._initialize_opengl_resources(texture_number=my_txt)
 
