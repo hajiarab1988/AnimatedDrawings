@@ -669,7 +669,7 @@ class AnimatedDrawing(Transform, TimeManager):
         self._vertex_buffer_dirty_bit = False
 
     def _draw(self, **kwargs):
-
+        print("DRAW!")
         if not self._is_opengl_initialized:
             self._initialize_opengl_resources()
 
