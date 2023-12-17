@@ -673,9 +673,9 @@ class AnimatedDrawing(Transform, TimeManager):
         self._vertex_buffer_dirty_bit = False
     count = 0
     def _draw(self, **kwargs):
-        count = count+1
-        my_txt = count % 2 / 2
-        print(count)
+        self.count += 1
+        my_txt = self.count % 2 / 2
+        print(self.count)
         if not self._is_opengl_initialized:
             self._initialize_opengl_resources(texture_number=my_txt)
 
