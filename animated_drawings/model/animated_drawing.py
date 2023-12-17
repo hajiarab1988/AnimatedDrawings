@@ -10,7 +10,7 @@ import time
 from typing import Dict, List, Tuple, Optional, TypedDict, DefaultDict
 from collections import defaultdict
 from pathlib import Path
-
+from PIL import Image
 import cv2
 import numpy as np
 import numpy.typing as npt
@@ -605,6 +605,10 @@ class AnimatedDrawing(Transform, TimeManager):
     def _initialize_opengl_resources(self) -> None:
 
         h, w, _ = self.txtr.shape
+        image = Image.fromarray(self.txtr)
+
+
+        image.save("output.png")
 
         # # initialize the texture
         self.txtr_id = GL.glGenTextures(1)
