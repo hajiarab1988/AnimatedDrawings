@@ -122,6 +122,7 @@ class AnimatedDrawingRig(Transform):
         
                 # Append the array to the list
                 data_array.append(line_data)
+                print(line_data)
 
         return data_array
 
