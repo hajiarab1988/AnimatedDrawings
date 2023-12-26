@@ -129,7 +129,7 @@ class AnimatedDrawingRig(Transform):
         return data_array
 
     def load_face_part_images(self):
-        self.eye_image = Image.open(/content/eye.png)
+        self.eye_image = Image.open("/content/eye.png")
         print(self.eye_image.size)
         
 
