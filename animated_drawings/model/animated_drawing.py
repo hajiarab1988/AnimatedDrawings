@@ -46,7 +46,7 @@ class AnimatedDrawingsJoint(Joint):
 
 class AnimatedDrawingRig(Transform):
     """ The skeletal rig used to deform the character """
-
+    face_pos_array = []
     def __init__(self, char_cfg: CharacterConfig):
         """ Initializes character rig.  """
         super().__init__()
@@ -102,6 +102,29 @@ class AnimatedDrawingRig(Transform):
 
         self._is_opengl_initialized: bool = False
         self._vertex_buffer_dirty_bit: bool = True
+
+    def read_file(self):
+        # Specify the path to your .txt file
+        file_path = "path/to/your/file.txt"
+
+        # Initialize an empty list to store arrays
+        data_array = []
+
+        # Read the file and process each line
+        with open(file_path, 'r') as file:
+            for line in file:
+                # Remove leading and trailing whitespaces, then split the line by commas
+                line_data = line.strip().split(',')
+        
+                # Convert the elements to appropriate data types if needed
+                # For example, if you want to convert all elements to integers:
+                # line_data = [int(element) for element in line_data]
+        
+                # Append the array to the list
+                data_array.append(line_data)
+
+        return data_array
+
 
     def set_global_orientations(self, bvh_frame_orientations: Dict[str, float]) -> None:
         """ Applies orientation from bvh_frame_orientation to the rig. """
