@@ -47,10 +47,12 @@ class AnimatedDrawingsJoint(Joint):
 class AnimatedDrawingRig(Transform):
     """ The skeletal rig used to deform the character """
     face_pos_array = []
+    eye_image = None
     def __init__(self, char_cfg: CharacterConfig):
         """ Initializes character rig.  """
         super().__init__()
         self.face_pos_array = self.read_file()
+        self.load_face_part_images()
         # create dictionary populated with joints
         joints_d: Dict[str, AnimatedDrawingsJoint]
         joints_d = {joint['name']: AnimatedDrawingsJoint(joint['name'], *joint['loc']) for joint in char_cfg.skeleton}
@@ -125,6 +127,11 @@ class AnimatedDrawingRig(Transform):
                 print(line_data)
 
         return data_array
+
+    def load_face_part_images(self):
+        self.eye_image = Image.open(/content/eye.png)
+        print(self.eye_image.size)
+        
 
 
     def set_global_orientations(self, bvh_frame_orientations: Dict[str, float]) -> None:
