@@ -48,6 +48,7 @@ class AnimatedDrawingRig(Transform):
     """ The skeletal rig used to deform the character """
     face_pos_array = []
     eye_image = None
+    body_image = None
     def __init__(self, char_cfg: CharacterConfig):
         """ Initializes character rig.  """
         super().__init__()
@@ -130,6 +131,7 @@ class AnimatedDrawingRig(Transform):
 
     def load_face_part_images(self):
         self.eye_image = Image.open("/content/eye.png")
+        self.body_image = Image.open("/content/test0.png")
         print(self.eye_image.size)
         
 
