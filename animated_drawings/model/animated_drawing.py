@@ -52,7 +52,7 @@ class AnimatedDrawingRig(Transform):
     def __init__(self, char_cfg: CharacterConfig):
         """ Initializes character rig.  """
         super().__init__()
-        self.face_pos_array = self.read_file()
+        self.read_file()
         self.load_face_part_images()
         # create dictionary populated with joints
         joints_d: Dict[str, AnimatedDrawingsJoint]
@@ -127,15 +127,20 @@ class AnimatedDrawingRig(Transform):
                 data_array.append(line_data)
                 print(line_data)
 
-        return data_array
+        self.face_pos_array =  data_array
 
     def load_face_part_images(self):
         self.eye_image = Image.open("/content/eye.png")
         self.body_image = Image.open("/content/test0.png")
         print(self.eye_image.size)
-        
 
+    def create_texture(self):
+        position = (int(self.face_pos_array[0][0]),int(self.face_pos_array[0][1]))
+        body = self.body_image
+        bodye.paste(self.eye_image, position, self.eye_image)
+        return body
 
+    
     def set_global_orientations(self, bvh_frame_orientations: Dict[str, float]) -> None:
         """ Applies orientation from bvh_frame_orientation to the rig. """
 
@@ -642,7 +647,7 @@ class AnimatedDrawing(Transform, TimeManager):
 
 
         #image.save("output.png")
-        image = Image.open(f"/content/test{texture_number}.png")
+        image =  self.create_texture() #Image.open(f"/content/test{texture_number}.png")
 
         # Convert the image to a NumPy array
         self.txtr = np.array(image)
