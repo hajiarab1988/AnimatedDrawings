@@ -340,7 +340,7 @@ class AnimatedDrawing(Transform, TimeManager):
     def create_texture(self):
         position = (int(self.face_pos_array[0][0]),int(self.face_pos_array[0][1]))
         body = self.body_image
-        bodye.paste(self.eye_image, position, self.eye_image)
+        body.paste(self.eye_image, position, self.eye_image)
         return body
 
     def _modify_retargeting_cfg_for_character(self):
