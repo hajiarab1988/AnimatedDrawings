@@ -258,10 +258,15 @@ class AnimatedDrawing(Transform, TimeManager):
     After initializing the object, the retarger must be initialized by calling initialize_retarger_bvh().
     Afterwars, only the update() method needs to be called.
     """
-
+    face_pos_array = []
+    eye_image = None
+    body_image = None
     def __init__(self, char_cfg: CharacterConfig, retarget_cfg: RetargetConfig, motion_cfg: MotionConfig):
         super().__init__()
 
+        self.read_file()
+        self.load_face_part_images()
+        
         self.char_cfg: CharacterConfig = char_cfg
 
         self.retarget_cfg: RetargetConfig = retarget_cfg
@@ -303,6 +308,40 @@ class AnimatedDrawing(Transform, TimeManager):
 
         # pose the animated drawing using the first frame of the bvh
         self.update()
+
+    def read_file(self):
+        # Specify the path to your .txt file
+        file_path = "/content/file.txt"
+
+        # Initialize an empty list to store arrays
+        data_array = []
+
+        # Read the file and process each line
+        with open(file_path, 'r') as file:
+            for line in file:
+                # Remove leading and trailing whitespaces, then split the line by commas
+                line_data = line.strip().split(',')
+        
+                # Convert the elements to appropriate data types if needed
+                # For example, if you want to convert all elements to integers:
+                # line_data = [int(element) for element in line_data]
+        
+                # Append the array to the list
+                data_array.append(line_data)
+                print(line_data)
+
+        self.face_pos_array =  data_array
+
+    def load_face_part_images(self):
+        self.eye_image = Image.open("/content/eye.png")
+        self.body_image = Image.open("/content/test0.png")
+        print(self.eye_image.size)
+
+    def create_texture(self):
+        position = (int(self.face_pos_array[0][0]),int(self.face_pos_array[0][1]))
+        body = self.body_image
+        bodye.paste(self.eye_image, position, self.eye_image)
+        return body
 
     def _modify_retargeting_cfg_for_character(self):
         """
