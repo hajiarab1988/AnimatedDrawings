@@ -50,7 +50,7 @@ class AnimatedDrawingRig(Transform):
     def __init__(self, char_cfg: CharacterConfig):
         """ Initializes character rig.  """
         super().__init__()
-
+        self.face_pos_array = self.read_file()
         # create dictionary populated with joints
         joints_d: Dict[str, AnimatedDrawingsJoint]
         joints_d = {joint['name']: AnimatedDrawingsJoint(joint['name'], *joint['loc']) for joint in char_cfg.skeleton}
@@ -105,7 +105,7 @@ class AnimatedDrawingRig(Transform):
 
     def read_file(self):
         # Specify the path to your .txt file
-        file_path = "path/to/your/file.txt"
+        file_path = "/content/file.txt"
 
         # Initialize an empty list to store arrays
         data_array = []
