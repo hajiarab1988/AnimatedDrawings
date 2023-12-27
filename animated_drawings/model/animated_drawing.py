@@ -333,9 +333,9 @@ class AnimatedDrawing(Transform, TimeManager):
         reye_position = (412- int(178/2),100)
 
         leyebrow_angle = float(self.face_pos_array[self.counter][0]) * eyebrow_angle_range//10
-        leyebrow_vertpos = int(int(self.face_pos_array[self.counter][1]) * eyebrow_vert_range//10)
+        leyebrow_vertpos = int(float(self.face_pos_array[self.counter][1]) * eyebrow_vert_range//10)
         reyebrow_angle = float(self.face_pos_array[self.counter][2]) * eyebrow_angle_range//10
-        reyebrow_vertpos = int(int(self.face_pos_array[self.counter][3]) * eyebrow_vert_range)//10
+        reyebrow_vertpos = int(float(self.face_pos_array[self.counter][3]) * eyebrow_vert_range)//10
 
         reyebrow = self.reyebrow_image.rotate(reyebrow_angle)
         leyebrow = self.leyebrow_image.rotate(leyebrow_angle) 
