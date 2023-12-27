@@ -352,10 +352,8 @@ class AnimatedDrawing(Transform, TimeManager):
     def create_eye(self):
       eye = self.eye_image.copy()
       original_eye = self.eye_image.copy()
-      pupil_pos = (int(eye.size[0]/2 + (float(self.face_pos_array[2][4])/12 * eye.size[0]/2) - self.eye_pupil_image.size[0]/2 ) , int(eye.size[1]/2 + (float(self.face_pos_array[2][5])/12 * eye.size[1]/2) - self.eye_pupil_image.size[1]/2))
-      eyelid_pos = (0,int((float(self.face_pos_array[2][6]) / 10 * eye.size[1])) - eye.size[1])
-      self.counter = self.counter +1
-      print("counter = " , self.counter)
+      pupil_pos = (int(eye.size[0]/2 + (float(self.face_pos_array[self.counter][4])/12 * eye.size[0]/2) - self.eye_pupil_image.size[0]/2 ) , int(eye.size[1]/2 + (float(self.face_pos_array[self.counter][5])/12 * eye.size[1]/2) - self.eye_pupil_image.size[1]/2))
+      eyelid_pos = (0,int((float(self.face_pos_array[self.counter][6]) / 10 * eye.size[1])) - eye.size[1])
       eye.paste(self.eye_pupil_image, pupil_pos, self.eye_pupil_image)
       eye.paste(self.eye_lid_image, eyelid_pos, self.eye_lid_image)
       eye_out = Image.new("RGBA", (original_eye.size), color=(0, 0, 0, 0))
@@ -370,10 +368,10 @@ class AnimatedDrawing(Transform, TimeManager):
         leye_position = (100 -int(178/2),100)
         reye_position = (412- int(178/2),100)
 
-        leyebrow_angle = float(self.face_pos_array[2][0]) * eyebrow_angle_range//10
-        leyebrow_vertpos = int(int(self.face_pos_array[2][1]) * eyebrow_vert_range//10)
-        reyebrow_angle = float(self.face_pos_array[2][2]) * eyebrow_angle_range//10
-        reyebrow_vertpos = int(int(self.face_pos_array[2][3]) * eyebrow_vert_range)//10
+        leyebrow_angle = float(self.face_pos_array[self.counter][0]) * eyebrow_angle_range//10
+        leyebrow_vertpos = int(int(self.face_pos_array[self.counter][1]) * eyebrow_vert_range//10)
+        reyebrow_angle = float(self.face_pos_array[self.counter][2]) * eyebrow_angle_range//10
+        reyebrow_vertpos = int(int(self.face_pos_array[self.counter][3]) * eyebrow_vert_range)//10
 
         reyebrow = self.reyebrow_image.rotate(reyebrow_angle)
         leyebrow = self.leyebrow_image.rotate(leyebrow_angle) 
@@ -400,7 +398,10 @@ class AnimatedDrawing(Transform, TimeManager):
         rotated_body = Image.fromarray(np.rot90(body_array, 3))
         img_dim = max(rotated_body.size)  
         padded_body = Image.new("RGBA", (img_dim, img_dim), color=(0, 0, 0, 0))
-        padded_body.paste(rotated_body, (0, 0))        
+        padded_body.paste(rotated_body, (0, 0))
+        if (self.counter < len(self.face_pos_array):
+            self.counter = self.counter +1
+        print("counter = " , self.counter)
         return padded_body
 
     def _modify_retargeting_cfg_for_character(self):
