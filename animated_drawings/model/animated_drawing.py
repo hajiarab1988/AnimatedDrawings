@@ -266,6 +266,7 @@ class AnimatedDrawing(Transform, TimeManager):
     eye_image = None
     eye_pupil_image = None
     body_image = None
+    counter = 0
     def __init__(self, char_cfg: CharacterConfig, retarget_cfg: RetargetConfig, motion_cfg: MotionConfig):
         super().__init__()
 
@@ -277,7 +278,8 @@ class AnimatedDrawing(Transform, TimeManager):
         self.retarget_cfg: RetargetConfig = retarget_cfg
 
         self.img_dim: int = self.char_cfg.img_dim
-
+        self.counter = self.counter +1
+        print("counter = " , self.counter)
         # load mask and pad to square
         self.mask: npt.NDArray[np.uint8] = self._load_mask()
 
