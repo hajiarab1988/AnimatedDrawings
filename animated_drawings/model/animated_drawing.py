@@ -364,7 +364,11 @@ class AnimatedDrawing(Transform, TimeManager):
         padded_body.paste(rotated_body, (0, 0))
         if (self.counter < len(self.face_pos_array)):
             self.counter = self.counter +1
+            
+        else:
+            self.counter = len(self.face_pos_array) - 1
         print("counter = " , self.counter)
+            
         return padded_body
 
     def _modify_retargeting_cfg_for_character(self):
