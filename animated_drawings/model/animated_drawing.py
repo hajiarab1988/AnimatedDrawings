@@ -345,7 +345,7 @@ class AnimatedDrawing(Transform, TimeManager):
         body_array = np.array(body)
         rotated_body = Image.fromarray(np.rot90(body_array, 3))
         img_dim = max(rotated_body.size)  
-        padded_body = Image.new("RGB", (img_dim, img_dim), color="black")
+        padded_body = Image.new("RGBA", (img_dim, img_dim), color=(0, 0, 0, 0))
         padded_body.paste(rotated_body, (0, 0))
         
         return padded_body
