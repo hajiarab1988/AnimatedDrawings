@@ -339,6 +339,7 @@ class AnimatedDrawing(Transform, TimeManager):
 
     def create_texture(self):
         position = (int(self.face_pos_array[0][0]),int(self.face_pos_array[0][1]))
+        print(position)
         body = self.body_image
         body.paste(self.eye_image, position, self.eye_image)
         return body
