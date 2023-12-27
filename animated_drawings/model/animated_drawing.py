@@ -260,7 +260,8 @@ class AnimatedDrawing(Transform, TimeManager):
     """
     face_pos_array = []
     face_base_image = None
-    eyebrow_image = None
+    leyebrow_image = None
+    reyebrow_image = None
     eye_lid_image =None    
     eye_image = None
     eye_pupil_image = None
@@ -338,28 +339,65 @@ class AnimatedDrawing(Transform, TimeManager):
 
     def load_body_part_images(self):
         self.face_base_image = Image.open("/content/face_base.png")
-        self.eyebrow_image = Image.open("/content/eyebrow.png")
+        self.leyebrow_image = Image.open("/content/eyebrow.png")
+        self.reyebrow_image = self.leyebrow_image.transpose(Image.FLIP_LEFT_RIGHT)
         self.eye_lid_image = Image.open("/content/eyelid.png")   
         self.eye_image = Image.open("/content/eye.png")
         self.eye_pupil_image =Image.open("/content/pupil.png")
         self.body_image = Image.open("/content/body.png")
 
         print(self.eye_image.size)
+        
+    def create_eye(self):
+      eye = self.eye_image.copy()
+      original_eye = self.eye_image.copy()
+      pupil_pos = (int(eye.size[0]/2 + (float(self.face_pos_array[2][4])/12 * eye.size[0]/2) - self.eye_pupil_image.size[0]/2 ) , int(eye.size[1]/2 + (float(self.face_pos_array[2][5])/12 * eye.size[1]/2) - self.eye_pupil_image.size[1]/2))
+      eyelid_pos = (0,int((float(self.face_pos_array[2][6]) / 10 * eye.size[1])) - eye.size[1])
+      
+      eye.paste(self.eye_pupil_image, pupil_pos, self.eye_pupil_image)
+      eye.paste(self.eye_lid_image, eyelid_pos, self.eye_lid_image)
+      eye_out = Image.new("RGBA", (original_eye.size), color=(0, 0, 0, 0))
+      mask = original_eye.split()[3]
+      eye_out.paste(eye, (0,0), mask)
+  
+      return eye_out
 
     def create_face(self):
+        eyebrow_angle_range = 22.0
+        eyebrow_vert_range = 30.0
+        leye_position = (100 -int(178/2),100)
+        reye_position = (412- int(178/2),100)
+
+        leyebrow_angle = float(self.face_pos_array[2][0]) * eyebrow_angle_range//10
+        leyebrow_vertpos = int(int(self.face_pos_array[2][1]) * eyebrow_vert_range//10)
+        reyebrow_angle = float(self.face_pos_array[2][2]) * eyebrow_angle_range//10
+        reyebrow_vertpos = int(int(self.face_pos_array[2][3]) * eyebrow_vert_range)//10
+
+        reyebrow = reyebrow_image.rotate(reyebrow_angle)
+        leyebrow = leyebrow_image.rotate(leyebrow_angle) 
+        leyebrow_position = (100 -int(178/2), leyebrow_vertpos)
+        reyebrow_position = (412 -int(178/2), reyebrow_vertpos)
+        eye = self.create_eye()
+        face = self.face_base_image.copy()
+        face.paste(eye, leye_position, eye)
+        face.paste(eye, reye_position, eye)
+        face.paste(reyebrow,reyebrow_position,reyebrow )
+        face.paste(leyebrow,leyebrow_position,leyebrow )
+        
+        return face
         
 
     def create_texture(self):
         position = (int(self.face_pos_array[0][0]),int(self.face_pos_array[0][1]))
         print(position)
-        body = self.body_image
+        body = self.body_image.copy()
+        face = self.create_face()
         body.paste(self.eye_image, position, self.eye_image)
         body_array = np.array(body)
         rotated_body = Image.fromarray(np.rot90(body_array, 3))
         img_dim = max(rotated_body.size)  
         padded_body = Image.new("RGBA", (img_dim, img_dim), color=(0, 0, 0, 0))
-        padded_body.paste(rotated_body, (0, 0))
-        
+        padded_body.paste(rotated_body, (0, 0))        
         return padded_body
 
     def _modify_retargeting_cfg_for_character(self):
