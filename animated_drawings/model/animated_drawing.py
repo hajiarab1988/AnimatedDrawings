@@ -259,13 +259,17 @@ class AnimatedDrawing(Transform, TimeManager):
     Afterwars, only the update() method needs to be called.
     """
     face_pos_array = []
+    face_base_image = None
+    eyebrow_image = None
+    eye_lid_image =None    
     eye_image = None
+    eye_pupil_image = None
     body_image = None
     def __init__(self, char_cfg: CharacterConfig, retarget_cfg: RetargetConfig, motion_cfg: MotionConfig):
         super().__init__()
 
         self.read_file()
-        self.load_face_part_images()
+        self.load_body_part_images()
         
         self.char_cfg: CharacterConfig = char_cfg
 
@@ -332,10 +336,18 @@ class AnimatedDrawing(Transform, TimeManager):
 
         self.face_pos_array =  data_array
 
-    def load_face_part_images(self):
+    def load_body_part_images(self):
+        self.face_base_image = Image.open("/content/face_base.png")
+        self.eyebrow_image = Image.open("/content/eyebrow.png")
+        self.eye_lid_image = Image.open("/content/eyelid.png")   
         self.eye_image = Image.open("/content/eye.png")
-        self.body_image = Image.open("/content/test0.png")
+        self.eye_pupil_image =Image.open("/content/pupil.png")
+        self.body_image = Image.open("/content/body.png")
+
         print(self.eye_image.size)
+
+    def create_face(self):
+        
 
     def create_texture(self):
         position = (int(self.face_pos_array[0][0]),int(self.face_pos_array[0][1]))
