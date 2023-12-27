@@ -362,7 +362,7 @@ class AnimatedDrawing(Transform, TimeManager):
         img_dim = max(rotated_body.size)  
         padded_body = Image.new("RGBA", (img_dim, img_dim), color=(0, 0, 0, 0))
         padded_body.paste(rotated_body, (0, 0))
-        if (self.counter < len(self.face_pos_array):
+        if (self.counter < len(self.face_pos_array)):
             self.counter = self.counter +1
         print("counter = " , self.counter)
         return padded_body
