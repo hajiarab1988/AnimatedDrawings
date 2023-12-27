@@ -296,7 +296,7 @@ class AnimatedDrawing(Transform, TimeManager):
                 # line_data = [int(element) for element in line_data]
         
                 # Append the array to the list
-                if line_data:
+                if len(line_data) == 7:
                     data_array.append(line_data)
                        
         self.face_pos_array =  data_array
@@ -363,11 +363,11 @@ class AnimatedDrawing(Transform, TimeManager):
         img_dim = max(rotated_body.size)  
         padded_body = Image.new("RGBA", (img_dim, img_dim), color=(0, 0, 0, 0))
         padded_body.paste(rotated_body, (0, 0))
-        if (self.counter < 3):
+        if (self.counter < len(self.face_pos_array) -1 ):
             self.counter = self.counter +1
             
         else:
-            self.counter = 3
+            self.counter = len(self.face_pos_array)-1
         print("counter = " , self.counter)
             
         return padded_body
