@@ -342,6 +342,12 @@ class AnimatedDrawing(Transform, TimeManager):
         print(position)
         body = self.body_image
         body.paste(self.eye_image, position, self.eye_image)
+        body_array = np.array(body)
+        rotated_body = Image.fromarray(np.rot90(body_array, 3)
+        img_dim = max(rotated_body.size)  
+        padded_body = Image.new("RGB", (img_dim, img_dim), color="black")
+        padded_body.paste(rotated_body, (0, 0))
+        body = np.array(padded_body)
         return body
 
     def _modify_retargeting_cfg_for_character(self):
