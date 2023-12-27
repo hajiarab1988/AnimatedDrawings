@@ -297,9 +297,9 @@ class AnimatedDrawing(Transform, TimeManager):
         
                 # Append the array to the list
                 data_array.append(line_data)
-                print(line_data)
-
+                print(line_data)        
         self.face_pos_array =  data_array
+        print("len(self.face_pos_array) = " ,len(self.face_pos_array))
 
     def load_body_part_images(self):
         self.face_base_image = Image.open("/content/face_base.png")
