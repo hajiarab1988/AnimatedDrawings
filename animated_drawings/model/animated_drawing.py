@@ -388,11 +388,12 @@ class AnimatedDrawing(Transform, TimeManager):
         
 
     def create_texture(self):
-        position = (int(self.face_pos_array[0][0]),int(self.face_pos_array[0][1]))
-        print(position)
+        position = (180,81)
+        
         body = self.body_image.copy()
         face = self.create_face()
-        body.paste(self.eye_image, position, self.eye_image)
+        face = face.resize((int(face.size[0]*0.2), int(face.size[1]*0.2)))
+        body.paste(face, position, face)
         body_array = np.array(body)
         rotated_body = Image.fromarray(np.rot90(body_array, 3))
         img_dim = max(rotated_body.size)  
