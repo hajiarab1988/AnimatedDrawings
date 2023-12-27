@@ -694,7 +694,7 @@ class AnimatedDrawing(Transform, TimeManager):
 
         #image.save("output.png")
         image =  self.create_texture() #Image.open(f"/content/test{texture_number}.png")
-
+        image.save("output.png")
         # Convert the image to a NumPy array
         self.txtr = np.array(image)
 
