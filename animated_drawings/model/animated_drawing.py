@@ -296,8 +296,9 @@ class AnimatedDrawing(Transform, TimeManager):
                 # line_data = [int(element) for element in line_data]
         
                 # Append the array to the list
-                data_array.append(line_data)
-                print(line_data)        
+                if(line_data != ""):
+                    data_array.append(line_data)
+                       
         self.face_pos_array =  data_array
         print("len(self.face_pos_array) = " ,len(self.face_pos_array))
 
