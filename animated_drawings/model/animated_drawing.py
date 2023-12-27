@@ -347,8 +347,8 @@ class AnimatedDrawing(Transform, TimeManager):
         img_dim = max(rotated_body.size)  
         padded_body = Image.new("RGB", (img_dim, img_dim), color="black")
         padded_body.paste(rotated_body, (0, 0))
-        body = np.array(padded_body)
-        return body
+        
+        return padded_body
 
     def _modify_retargeting_cfg_for_character(self):
         """
