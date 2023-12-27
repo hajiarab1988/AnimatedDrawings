@@ -278,8 +278,7 @@ class AnimatedDrawing(Transform, TimeManager):
         self.retarget_cfg: RetargetConfig = retarget_cfg
 
         self.img_dim: int = self.char_cfg.img_dim
-        self.counter = self.counter +1
-        print("counter = " , self.counter)
+
         # load mask and pad to square
         self.mask: npt.NDArray[np.uint8] = self._load_mask()
 
@@ -355,7 +354,8 @@ class AnimatedDrawing(Transform, TimeManager):
       original_eye = self.eye_image.copy()
       pupil_pos = (int(eye.size[0]/2 + (float(self.face_pos_array[2][4])/12 * eye.size[0]/2) - self.eye_pupil_image.size[0]/2 ) , int(eye.size[1]/2 + (float(self.face_pos_array[2][5])/12 * eye.size[1]/2) - self.eye_pupil_image.size[1]/2))
       eyelid_pos = (0,int((float(self.face_pos_array[2][6]) / 10 * eye.size[1])) - eye.size[1])
-      
+      self.counter = self.counter +1
+      print("counter = " , self.counter)
       eye.paste(self.eye_pupil_image, pupil_pos, self.eye_pupil_image)
       eye.paste(self.eye_lid_image, eyelid_pos, self.eye_lid_image)
       eye_out = Image.new("RGBA", (original_eye.size), color=(0, 0, 0, 0))
